@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Conceptual.Polymorphism.DataTransferObjects.Person;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,9 +29,29 @@ namespace Conceptual.Polymorphism
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddSwaggerGen(c =>
             {
+                // c.GeneratePolymorphicSchemas(infoType => {
+                //     if (infoType == typeof(Person)) 
+                //     {
+                //         return new Type[] 
+                //         {
+                //             typeof(Student),
+                //             typeof(Employee),
+                //         };
+                //     }
+
+                //     return Enumerable.Empty<Type>();
+                // }, (discriminator) => {
+                //     if (discriminator == typeof(Person))
+                //     {
+                //         return "role";
+                //     }
+                //     return null;
+                // });
+                c.UseOneOfForPolymorphism();
+                // c.UseAllOfForInheritance();
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Conceptual.Polymorphism", Version = "v1" });
             });
         }
