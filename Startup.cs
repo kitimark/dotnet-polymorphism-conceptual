@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Conceptual.Polymorphism.Converters;
 using Conceptual.Polymorphism.DataTransferObjects.Person;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +30,10 @@ namespace Conceptual.Polymorphism
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers()
+                .AddNewtonsoftJson(options => {
+                    options.SerializerSettings.Converters.Add(new PersonConverter());
+                });
             services.AddSwaggerGen(c =>
             {
                 // c.GeneratePolymorphicSchemas(infoType => {

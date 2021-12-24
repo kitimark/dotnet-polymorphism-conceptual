@@ -37,5 +37,11 @@ namespace Conceptual.Polymorphism.Controllers
                 }
             };
         }
+
+        [HttpPost]
+        public Person Post([FromBody] Person person)
+        {
+            return person;
+        }
     }
 }
